@@ -10,7 +10,6 @@ IMMUTABLE_ENABLE=true
 LP_ENABLE=true
 
 ifneq ($(wildcard $(srctree)/include/crypto/internal/rsa.h),)
-    $(warning [DEFEX] INTEGRITY_ENABLE)
     INTEGRITY_ENABLE=true
 endif
 
@@ -41,9 +40,7 @@ DEFEX_DEFINES := -DDEFEX_PERMISSIVE_IM
 ifeq ($(CONFIG_DEFEX_KERNEL_ONLY), y)
     DEFEX_DEFINES += -DDEFEX_KERNEL_ONLY
     ifeq ($(CONFIG_SAMSUNG_PRODUCT_SHIP), y)
-        $(warning [DEFEX] Kernel_only & Ship)
     else
-        $(warning [DEFEX] Kernel_only & Noship)
         DEFEX_DEFINES += -DDEFEX_PERMISSIVE_SP
         DEFEX_DEFINES += -DDEFEX_PERMISSIVE_IM
         DEFEX_DEFINES += -DDEFEX_PERMISSIVE_LP
@@ -109,13 +106,10 @@ else
 endif
 
 ifeq ($(SEC_BUILD_OPTION_VTS), true)
-    $(warning [DEFEX] VTS true $(SEC_BUILD_OPTION_VTS))
     DEFEX_DEFINES += -DDEFEX_PERMISSIVE_SP
     DEFEX_DEFINES += -DDEFEX_PERMISSIVE_PED
     DEFEX_DEFINES += -DDEFEX_PERMISSIVE_IM
     DEFEX_DEFINES += -DDEFEX_PERMISSIVE_LP
-else
-    $(warning [DEFEX] VTS false $(SEC_BUILD_OPTION_VTS))
 endif
 
 EXTRA_CFLAGS += -I$(srctree)/$(src)/cert
